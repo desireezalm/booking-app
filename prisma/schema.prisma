@@ -16,15 +16,15 @@ datasource db {
 
 //USER
 model User {
-  id          String    @id @default(uuid())
-  username    String    @unique
-  password    String
-  name        String
-  email       String
-  phoneNumber String
-  pictureUrl  String
-  bookings    Booking[]
-  reviews     Review[]
+  id              String    @id @default(uuid())
+  username        String    @unique
+  password        String
+  name            String
+  email           String
+  phoneNumber     String
+  profilePicture  String
+  bookings        Booking[]
+  reviews         Review[]
 }
 
 // REVIEW
@@ -35,33 +35,8 @@ model Review {
   rating     Int
   comment    String
 
-  user     User     @relation(fields: [userId], references: [id])
-  property Property @relation(fields: [propertyId], references: [id])
-
-  @@index([userId])
-  @@index([propertyId])
-}
-
-// AMENITY
-model Amenity {
-  id         String     @id @default(uuid())
-  name       String
-  properties Property[]
-}
-
-// BOOKING
-model Booking {
-  id             String   @id @default(uuid())
-  userId         String
-  propertyId     String
-  checkinDate    DateTime
-  checkoutDate   DateTime
-  numberOfGuests Int
-  totalPrice     Decimal  @db.Decimal(10, 2)
-  bookingStatus  String
-
-  user     User     @relation(fields: [userId], references: [id])
-  property Property @relation(fields: [propertyId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([userId])
   @@index([propertyId])
@@ -82,20 +57,46 @@ model Property {
   amenities     Amenity[]
   bookings      Booking[]
   reviews       Review[]
-  host          Host      @relation(fields: [hostId], references: [id])
+  host          Host      @relation(fields: [hostId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([hostId])
 }
 
+// AMENITY
+model Amenity {
+  id         String     @id @default(uuid())
+  name       String
+  properties Property[]
+}
+
+// BOOKING
+model Booking {
+  id             String   @id @default(uuid())
+  userId         String
+  propertyId     String
+  checkinDate    DateTime
+  checkoutDate   DateTime
+  numberOfGuests Int
+  totalPrice     Int
+  bookingStatus  String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  
+
+  @@index([userId])
+  @@index([propertyId])
+}
+
 // HOST
 model Host {
-  id          String     @id @default(uuid())
-  username    String     @unique
-  password    String
-  name        String
-  email       String
-  phoneNumber String
-  pictureUrl  String
-  aboutMe     String
-  listings    Property[]
+  id              String     @id @default(uuid())
+  username        String     @unique
+  password        String
+  name            String
+  email           String
+  phoneNumber     String
+  profilePicture  String
+  aboutMe         String
+  listings        Property[]
 }
