@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import amenityData from "../src/data/amenities.json" assert { type: "json" };
-import bookingData from "../src/data/bookings.json" assert { type: "json" };
+import userData from "../src/data/users.json" assert { type: "json" };
 import hostData from "../src/data/hosts.json" assert { type: "json" };
+import bookingData from "../src/data/bookings.json" assert { type: "json" };
 import propertyData from "../src/data/properties.json" assert { type: "json" };
 import reviewData from "../src/data/reviews.json" assert { type: "json" };
-import userData from "../src/data/users.json" assert { type: "json" };
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
 
