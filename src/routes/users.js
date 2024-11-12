@@ -4,6 +4,7 @@ import getUserById from "../services/users/getUserById.js";
 import createUser from "../services/users/createUser.js";
 import updateUserById from "../services/users/updateUserById.js";
 import deleteUserById from "../services/users/deleteUserById.js";
+import authJwt from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -50,31 +51,28 @@ router.get(
   //customErrorHandler
 );
 
-router.post(
-  "/",
-  /*authJwt,*/ async (req, res, next) => {
-    try {
-      const { username, password, name, email, phoneNumber, profilePicture } =
-        req.body;
-      const newUser = await createUser(
-        username,
-        password,
-        name,
-        email,
-        phoneNumber,
-        profilePicture
-      );
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(500).send("Something went wrong while creating a new user!");
-      next(error);
-    }
+router.post("/", authJwt, async (req, res, next) => {
+  try {
+    const { username, password, name, email, phoneNumber, profilePicture } =
+      req.body;
+    const newUser = await createUser(
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture
+    );
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).send("Something went wrong while creating a new user!");
+    next(error);
   }
-);
+});
 
 router.put(
   "/:id",
-  /*authJwt,*/
+  authJwt,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -107,7 +105,7 @@ router.put(
 
 router.delete(
   "/:id",
-  /*authJwt,*/
+  authJwt,
   async (req, res, next) => {
     try {
       const { id } = req.params;
