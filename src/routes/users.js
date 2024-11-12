@@ -5,6 +5,7 @@ import createUser from "../services/users/createUser.js";
 import updateUserById from "../services/users/updateUserById.js";
 import deleteUserById from "../services/users/deleteUserById.js";
 import authJwt from "../middleware/auth.js";
+import customErrorHandler from "../middleware/customErrorHandler.js";
 
 const router = express.Router();
 
@@ -47,8 +48,8 @@ router.get(
     } catch (error) {
       next(error);
     }
-  }
-  //customErrorHandler
+  },
+  customErrorHandler
 );
 
 router.post("/", authJwt, async (req, res, next) => {
@@ -99,8 +100,8 @@ router.put(
     } catch (error) {
       next(error);
     }
-  }
-  //customErrorHandler
+  },
+  customErrorHandler
 );
 
 router.delete(
@@ -124,8 +125,8 @@ router.delete(
     } catch (error) {
       next(error);
     }
-  }
-  //customErrorHandler
+  },
+  customErrorHandler
 );
 
 export default router;
