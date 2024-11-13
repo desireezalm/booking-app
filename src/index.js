@@ -1,7 +1,9 @@
 import express from "express";
-import usersRouter from "./routes/users.js";
-import logHandler from "./middleware/logHandler.js";
 import loginRouter from "./routes/login.js";
+import usersRouter from "./routes/users.js";
+import hostsRouter from "./routes/hosts.js";
+import logHandler from "./middleware/logHandler.js";
+
 import "dotenv/config";
 import * as Sentry from "@sentry/node";
 import genericErrorHandler from "./middleware/genericErrorHandler.js";
@@ -31,6 +33,7 @@ app.use(logHandler);
 // ROUTES
 app.use("/users", usersRouter);
 app.use("/login", loginRouter);
+app.use("/hosts", hostsRouter);
 
 // MAIN PAGE
 app.get("/", (req, res) => {
