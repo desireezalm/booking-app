@@ -13,22 +13,7 @@ router.get("/", async (req, res, next) => {
   try {
     const { name } = req.query;
     const hosts = await getHosts(name);
-
-    const publicHostData = () => {
-      for (const host of hosts) {
-        const publicProfile = {
-          id: host.id,
-          username: host.username,
-          name: host.name,
-          email: host.email,
-          phoneNumber: host.phoneNumber,
-          profilePicture: host.profilePicture,
-          aboutMe: host.aboutMe,
-        };
-        return publicProfile;
-      }
-    };
-    res.status(200).json(publicHostData(hosts));
+    res.status(200).json(hosts);
   } catch (error) {
     res.status(500).send("Something went wrong while getting list of hosts!");
     next(error);

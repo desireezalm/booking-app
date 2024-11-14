@@ -13,21 +13,7 @@ router.get("/", async (req, res, next) => {
   try {
     const { username, email } = req.query;
     const users = await getUsers(username, email);
-
-    const publicUserData = () => {
-      for (const user of users) {
-        const publicProfile = {
-          id: user.id,
-          username: user.username,
-          name: user.name,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          profilePicture: user.profilePicture,
-        };
-        return publicProfile;
-      }
-    };
-    res.status(200).json(publicUserData(users));
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).send("Something went wrong while getting list of users!");
     next(error);
