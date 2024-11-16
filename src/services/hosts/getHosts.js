@@ -1,13 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import replaceArray from "../../utils/replaceArray.js";
 
-const getHosts = async () => {
+const getHosts = async (name) => {
   const prisma = new PrismaClient();
   const hosts = await prisma.host.findMany();
+  let publicProfiles = replaceArray(hosts, "password");
 
-  const publicHostData = replaceArray(hosts, "password");
+  if (name) {
+    publicProfiles = publicProfiles.filter((profile) =>
+      profile.name.includes(name)
+    );
+  }
 
-  return publicHostData;
+  return publicProfiles;
 };
 
 export default getHosts;
