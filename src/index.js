@@ -4,6 +4,7 @@ import usersRouter from "./routes/users.js";
 import hostsRouter from "./routes/hosts.js";
 import amenitiesRouter from "./routes/amenities.js";
 import propertiesRouter from "./routes/properties.js";
+import bookingsRouter from "./routes/bookings.js";
 import logHandler from "./middleware/logHandler.js";
 import "dotenv/config";
 import * as Sentry from "@sentry/node";
@@ -37,6 +38,7 @@ app.use("/login", loginRouter);
 app.use("/hosts", hostsRouter);
 app.use("/amenities", amenitiesRouter);
 app.use("/properties", propertiesRouter);
+app.use("/bookings", bookingsRouter);
 
 // MAIN PAGE
 app.get("/", (req, res) => {
