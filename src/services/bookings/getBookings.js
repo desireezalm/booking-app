@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const getBookings = async (userId) => {
   const prisma = new PrismaClient();
-  const bookings = await prisma.booking.findMany({
+  let bookings = await prisma.booking.findMany({
     include: {
       user: true,
       property: true,
@@ -11,6 +11,7 @@ const getBookings = async (userId) => {
 
   if (userId) {
     bookings = bookings.filter((booking) => booking.userId === userId);
+    console.log(bookings);
   }
 
   return bookings;
