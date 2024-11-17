@@ -1,5 +1,4 @@
 import express from "express";
-// IMPORTS
 import getBookings from "../services/bookings/getBookings.js";
 import getBookingById from "../services/bookings/getBookingById.js";
 import createBooking from "../services/bookings/createBooking.js";
