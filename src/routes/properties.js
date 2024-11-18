@@ -88,6 +88,7 @@ router.put(
         bathRoomCount,
         maxGuestCount,
         rating,
+        amenities,
       } = req.body;
       const updatedProperty = await updatePropertyById(id, {
         hostId,
@@ -99,6 +100,7 @@ router.put(
         bathRoomCount,
         maxGuestCount,
         rating,
+        amenities,
       });
 
       if (updatedProperty) {
