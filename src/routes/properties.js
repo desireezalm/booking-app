@@ -4,6 +4,7 @@ import getPropertyById from "../services/properties/getPropertyById.js";
 import createProperty from "../services/properties/createProperty.js";
 import updatePropertyById from "../services/properties/updatePropertyById.js";
 import deletePropertyById from "../services/properties/deletePropertyById.js";
+// import connectAmenities from "../services/properties/connectAmenities.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -88,7 +89,6 @@ router.put(
         bathRoomCount,
         maxGuestCount,
         rating,
-        amenities,
       } = req.body;
       const updatedProperty = await updatePropertyById(id, {
         hostId,
@@ -100,7 +100,6 @@ router.put(
         bathRoomCount,
         maxGuestCount,
         rating,
-        amenities,
       });
 
       if (updatedProperty) {

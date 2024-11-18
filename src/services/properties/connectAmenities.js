@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const connectAmenities = async (id, amenityIds) => {
+const connectAmenities = async (id, amenityId) => {
   const prisma = new PrismaClient();
   const property = await prisma.property.updateMany({
     where: { id },
