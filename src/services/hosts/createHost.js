@@ -1,25 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 
-const createHost = async (
-  username,
-  password,
-  name,
-  email,
-  phoneNumber,
-  profilePicture,
-  aboutMe
-) => {
+const createHost = async (data) => {
+  const prisma = new PrismaClient();
   const newHost = {
-    username,
-    password,
-    name,
-    email,
-    phoneNumber,
-    profilePicture,
-    aboutMe,
+    username: data.username,
+    password: data.password,
+    name: data.name,
+    email: data.email,
+    phoneNumber: data.phoneNumber,
+    profilePicture: data.profilePicture,
+    aboutMe: data.aboutMe,
   };
 
-  const prisma = new PrismaClient();
   const host = await prisma.host.create({
     data: newHost,
   });

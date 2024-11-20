@@ -1,29 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 
-const createProperty = async (
-  hostId,
-  title,
-  description,
-  location,
-  pricePerNight,
-  bedroomCount,
-  bathRoomCount,
-  maxGuestCount,
-  rating
-) => {
+const createProperty = async (data) => {
+  const prisma = new PrismaClient();
   const newProperty = {
-    hostId,
-    title,
-    description,
-    location,
-    pricePerNight,
-    bedroomCount,
-    bathRoomCount,
-    maxGuestCount,
-    rating,
+    hostId: data.hostId,
+    title: data.title,
+    description: data.description,
+    location: data.location,
+    pricePerNight: data.pricePerNight,
+    bedroomCount: data.bedroomCount,
+    bathRoomCount: data.bathRoomCount,
+    maxGuestCount: data.maxGuestCount,
+    rating: data.rating,
   };
 
-  const prisma = new PrismaClient();
   const property = await prisma.property.create({
     data: newProperty,
   });

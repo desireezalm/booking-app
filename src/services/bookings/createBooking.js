@@ -1,25 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 
-const createBooking = async (
-  userId,
-  propertyId,
-  checkinDate,
-  checkoutDate,
-  numberOfGuests,
-  totalPrice,
-  bookingStatus
-) => {
+const createBooking = async (data) => {
+  const prisma = new PrismaClient();
   const newBooking = {
-    userId,
-    propertyId,
-    checkinDate,
-    checkoutDate,
-    numberOfGuests,
-    totalPrice,
-    bookingStatus,
+    userId: data.userId,
+    propertyId: data.propertyId,
+    checkinDate: data.checkinDate,
+    checkoutDate: data.checkoutDate,
+    numberOfGuests: data.numberOfGuests,
+    totalPrice: data.totalPrice,
+    bookingStatus: data.bookingStatus,
   };
 
-  const prisma = new PrismaClient();
   const booking = await prisma.booking.create({
     data: newBooking,
   });
