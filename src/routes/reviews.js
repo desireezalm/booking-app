@@ -5,6 +5,7 @@ import getReviewById from "../services/reviews/getReviewById.js";
 import createReview from "../services/reviews/createReview.js";
 import updateReviewById from "../services/reviews/updateReviewById.js";
 import deleteReviewById from "../services/reviews/deleteReviewById.js";
+import checkMissingData from "../utils/checkMissingData.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -16,7 +17,6 @@ router.get("/", async (req, res, next) => {
     const reviews = await getReviews(propertyId);
     res.status(200).json(reviews);
   } catch (error) {
-    res.status(500).send("Something went wrong while getting list of reviews!");
     next(error);
   }
 });
@@ -41,12 +41,20 @@ router.get(
 
 router.post("/", authJwt, async (req, res, next) => {
   try {
-    const { userId, propertyId, rating, comment } = req.body;
+    const data = req.body;
+    const dataRequired = ["userId", "propertyId", "rating", "comment"];
+    const missingData = checkMissingData(data, dataRequired);
 
-    const newReview = await createReview(userId, propertyId, rating, comment);
+    if (missingData.length > 0) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        missingFields: missingData,
+      });
+    }
+
+    const newReview = await createReview(data);
     res.status(201).json(newReview);
   } catch (error) {
-    res.status(500).send("Something went wrong while creating a new review!");
     next(error);
   }
 });

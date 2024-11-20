@@ -4,6 +4,7 @@ import getHostById from "../services/hosts/getHostById.js";
 import createHost from "../services/hosts/createHost.js";
 import updateHostById from "../services/hosts/updateHostById.js";
 import deleteHostById from "../services/hosts/deleteHostById.js";
+import checkMissingData from "../utils/checkMissingData.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -15,7 +16,6 @@ router.get("/", async (req, res, next) => {
     const hosts = await getHosts(name);
     res.status(200).json(hosts);
   } catch (error) {
-    res.status(500).send("Something went wrong while getting list of hosts!");
     next(error);
   }
 });
@@ -40,27 +40,30 @@ router.get(
 
 router.post("/", authJwt, async (req, res, next) => {
   try {
-    const {
-      username,
-      password,
-      name,
-      email,
-      phoneNumber,
-      profilePicture,
-      aboutMe,
-    } = req.body;
-    const newHost = await createHost(
-      username,
-      password,
-      name,
-      email,
-      phoneNumber,
-      profilePicture,
-      aboutMe
-    );
+    const data = req.body;
+
+    const dataRequired = [
+      "username",
+      "password",
+      "name",
+      "email",
+      "phoneNumber",
+      "profilePicture",
+      "aboutMe",
+    ];
+
+    const missingData = checkMissingData(data, dataRequired);
+
+    if (missingData.length > 0) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        missingFields: missingData,
+      });
+    }
+
+    const newHost = await createHost(data);
     res.status(201).json(newHost);
   } catch (error) {
-    res.status(500).send("Something went wrong while creating a new host!");
     next(error);
   }
 });

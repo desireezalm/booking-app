@@ -4,6 +4,7 @@ import getAmenityById from "../services/amenities/getAmenityById.js";
 import createAmenity from "../services/amenities/createAmenity.js";
 import updateAmenityById from "../services/amenities/updateAmenityById.js";
 import deleteAmenityById from "../services/amenities/deleteAmenityById.js";
+import checkMissingData from "../utils/checkMissingData.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -42,11 +43,22 @@ router.get(
 
 router.post("/", authJwt, async (req, res, next) => {
   try {
-    const { name } = req.body;
-    const newAmenity = await createAmenity(name);
+    const data = req.body;
+
+    const dataRequired = ["name"];
+
+    const missingData = checkMissingData(data, dataRequired);
+
+    if (missingData.length > 0) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        missingFields: missingData,
+      });
+    }
+
+    const newAmenity = await createAmenity(data);
     res.status(201).json(newAmenity);
   } catch (error) {
-    res.status(500).send("Something went wrong while creating a new amenity!");
     next(error);
   }
 });

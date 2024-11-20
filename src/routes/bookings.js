@@ -4,6 +4,7 @@ import getBookingById from "../services/bookings/getBookingById.js";
 import createBooking from "../services/bookings/createBooking.js";
 import updateBookingById from "../services/bookings/updateBookingById.js";
 import deleteBookingById from "../services/bookings/deleteBookingById.js";
+import checkMissingData from "../utils/checkMissingData.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -42,28 +43,30 @@ router.get(
 
 router.post("/", authJwt, async (req, res, next) => {
   try {
-    const {
-      userId,
-      propertyId,
-      checkinDate,
-      checkoutDate,
-      numberOfGuests,
-      totalPrice,
-      bookingStatus,
-    } = req.body;
+    const data = req.body;
 
-    const newBooking = await createBooking(
-      userId,
-      propertyId,
-      checkinDate,
-      checkoutDate,
-      numberOfGuests,
-      totalPrice,
-      bookingStatus
-    );
+    const dataRequired = [
+      "userId",
+      "propertyId",
+      "checkinDate",
+      "checkoutDate",
+      "numberOfGuests",
+      "totalPrice",
+      "bookingStatus",
+    ];
+
+    const missingData = checkMissingData(data, dataRequired);
+
+    if (missingData.length > 0) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        missingFields: missingData,
+      });
+    }
+
+    const newBooking = await createBooking(data);
     res.status(201).json(newBooking);
   } catch (error) {
-    res.status(500).send("Something went wrong while creating a new booking!");
     next(error);
   }
 });

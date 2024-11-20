@@ -4,7 +4,7 @@ import getPropertyById from "../services/properties/getPropertyById.js";
 import createProperty from "../services/properties/createProperty.js";
 import updatePropertyById from "../services/properties/updatePropertyById.js";
 import deletePropertyById from "../services/properties/deletePropertyById.js";
-// import connectAmenities from "../services/properties/connectAmenities.js";
+import checkMissingData from "../utils/checkMissingData.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -43,32 +43,33 @@ router.get(
 
 router.post("/", authJwt, async (req, res, next) => {
   try {
-    const {
-      hostId,
-      title,
-      description,
-      location,
-      pricePerNight,
-      bedroomCount,
-      bathRoomCount,
-      maxGuestCount,
-      rating,
-    } = req.body;
+    const data = req.body;
 
-    const newProperty = await createProperty(
-      hostId,
-      title,
-      description,
-      location,
-      pricePerNight,
-      bedroomCount,
-      bathRoomCount,
-      maxGuestCount,
-      rating
-    );
+    const dataRequired = [
+      "hostId",
+      "title",
+      "description",
+      "location",
+      "pricePerNight",
+      "bedroomCount",
+      "bathRoomCount",
+      "maxGuestCount",
+      "rating",
+    ];
+
+    const missingData = checkMissingData(data, dataRequired);
+
+    if (missingData.length > 0) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        missingFields: missingData,
+      });
+    }
+
+    const newProperty = await createProperty(data);
+
     res.status(201).json(newProperty);
   } catch (error) {
-    res.status(500).send("Something went wrong while creating a new property!");
     next(error);
   }
 });

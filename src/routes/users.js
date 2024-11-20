@@ -4,6 +4,7 @@ import getUserById from "../services/users/getUserById.js";
 import createUser from "../services/users/createUser.js";
 import updateUserById from "../services/users/updateUserById.js";
 import deleteUserById from "../services/users/deleteUserById.js";
+import checkMissingData from "../utils/checkMissingData.js";
 import authJwt from "../middleware/auth.js";
 import customErrorHandler from "../middleware/customErrorHandler.js";
 
@@ -40,19 +41,28 @@ router.get(
 
 router.post("/", authJwt, async (req, res, next) => {
   try {
-    const { username, password, name, email, phoneNumber, profilePicture } =
-      req.body;
-    const newUser = await createUser(
-      username,
-      password,
-      name,
-      email,
-      phoneNumber,
-      profilePicture
-    );
+    const data = req.body;
+
+    const dataRequired = [
+      "username",
+      "password",
+      "name",
+      "email",
+      "phoneNumber",
+      "profilePicture",
+    ];
+
+    const missingData = checkMissingData(data, dataRequired);
+    if (missingData.length > 0) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        missingFields: missingData,
+      });
+    }
+
+    const newUser = await createUser(data);
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).send("Something went wrong while creating a new user!");
     next(error);
   }
 });
