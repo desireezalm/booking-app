@@ -9,7 +9,7 @@ const calcRating = (property) => {
       return total + item.rating;
     }, 0);
     return result / queryArray.length;
-  } else if ((property.reviews.length = 0)) {
+  } else {
     return 0;
   }
 };
