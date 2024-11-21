@@ -8,9 +8,10 @@
     "dev": "nodemon src/index.js",
     "test-positive": "newman run \"./postman/collections/Bookings API.json\" -e \"./postman/environments/Local.postman_environment.json\"",
     "test-negative": "newman run \"./postman/collections/Bookings API Negative.json\" -e \"./postman/environments/Local.postman_environment.json\"",
-    "test": "npm run test-positive && npm run test-negative"
+    "test": "npm run test-positive && npm run test-negative",
+    "test-vitest": "vitest"
   },
-  "author": "",
+  "author": "Desirée Zalm",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.22.0",
@@ -26,7 +27,8 @@
   "devDependencies": {
     "newman": "^6.0.0",
     "nodemon": "^3.0.1",
-    "prisma": "^5.22.0"
+    "prisma": "^5.22.0",
+    "vitest": "^2.1.5"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
