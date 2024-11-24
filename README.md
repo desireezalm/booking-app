@@ -11,7 +11,7 @@ Back-end for a booking application.
 
 ## Contents
 
-### **_API endpoints_**
+#### **_API endpoints_**
 
 - Users
 - Login
@@ -22,16 +22,16 @@ Back-end for a booking application.
 - Bookings
 - Reviews
 
-### **_Database schema_**
+#### **_Database schema_**
 
 ![data model](https://github.com/desireezalm/booking-app/blob/main/media/booking_model.jpg?raw=true)
 Credit: [Winc Academy](https://github.com/WincAcademy "Winc Academy")
 
-### **_CRUD service functions_**
+#### **_CRUD service functions_**
 
 ![resources](https://github.com/desireezalm/booking-app/blob/develop/media/booking_resources.jpg?raw=true)
 
-### **_Other functions_**
+#### **_Other functions_**
 
 - Authentication
 - Error handling

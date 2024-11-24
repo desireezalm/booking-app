@@ -4,6 +4,10 @@ const getUserById = async (id) => {
   const prisma = new PrismaClient();
   const user = await prisma.user.findUnique({
     where: { id },
+    include: {
+      bookings: true,
+      reviews: true,
+    },
   });
 
   return user;

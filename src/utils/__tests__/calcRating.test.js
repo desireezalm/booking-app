@@ -1,6 +1,5 @@
 import calcRating from "../calcRating.js";
 import { describe, it, expect } from "vitest";
-import excludeData from "../excludeData.js";
 
 describe("calculate property rating function", () => {
   const testData = {

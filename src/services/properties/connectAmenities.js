@@ -1,3 +1,6 @@
+// Started this function for future use
+// Any tips on how to accomplish this functionality are welcome
+
 import { PrismaClient } from "@prisma/client";
 
 const connectAmenities = async (id, amenityId) => {
