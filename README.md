@@ -4,7 +4,7 @@
 - **Learning Institution:** _[Winc Academy](https://github.com/WincAcademy "Winc Academy")_
 - **Course:** _Full-stack Development_
 - **Student:** _Desirée Zalm_
-- **Date:** _30-11-2024_
+- **Date:** _24-11-2024_
 
 ## Description
 
