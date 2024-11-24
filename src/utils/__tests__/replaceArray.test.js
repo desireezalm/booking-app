@@ -2,7 +2,6 @@ import replaceArray from "../replaceArray.js";
 import { describe, it, expect, vi } from "vitest";
 
 describe("replace array function", () => {
-  // 1
   const testData = [
     {
       id: "a1234567-89ab-cdef-0123-456789abcdef",

@@ -11,7 +11,6 @@ const getBookings = async (userId) => {
 
   if (userId) {
     bookings = bookings.filter((booking) => booking.userId === userId);
-    console.log(bookings);
   }
 
   return bookings;
