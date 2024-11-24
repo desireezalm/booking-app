@@ -1,5 +1,6 @@
 # Back-end Project Assignment
 
+- **Title:** _Booking Application_
 - **Learning Institution:** _[Winc Academy](https://github.com/WincAcademy "Winc Academy")_
 - **Course:** _Full-stack Development_
 - **Student:** _Desirée Zalm_
@@ -7,11 +8,11 @@
 
 ## Description
 
-Back-end for a booking application.
+Back-end for a booking application (in the style of AirBnB). Includes a database model. See below for the features and technologies used.
 
-## Contents
+## Features
 
-#### **_API endpoints_**
+#### **_API endpoints_:**
 
 - Users
 - Login
@@ -22,16 +23,16 @@ Back-end for a booking application.
 - Bookings
 - Reviews
 
-#### **_Database schema_**
+#### **_Database schema_:**
 
 ![data model](https://github.com/desireezalm/booking-app/blob/main/media/booking_model.jpg?raw=true)
 Credit: [Winc Academy](https://github.com/WincAcademy "Winc Academy")
 
-#### **_CRUD service functions_**
+#### **_CRUD service functions_:**
 
 ![resources](https://github.com/desireezalm/booking-app/blob/develop/media/booking_resources.jpg?raw=true)
 
-#### **_Other functions_**
+#### **_Other functionality:**
 
 - Authentication
 - Error handling
